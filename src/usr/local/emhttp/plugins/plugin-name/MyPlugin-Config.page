@@ -46,7 +46,7 @@ $cfg = parse_plugin_cfg("my-plugin");
 
 <!-- Basic text input example - uses htmlspecialchars to prevent XSS -->
 _(Text Input)_:
-: <input type="text" name="TEXT_VALUE" value="<?= htmlspecialchars($cfg['TEXT_VALUE']); ?>">
+: <input type="text" name="TEXT_VALUE" value="<?= htmlspecialchars((string) ($cfg['TEXT_VALUE'] ?? '')); ?>">
 
 > This is the help text displayed if you click on the name of the setting.
 > It can span multiple lines and supports markdown formatting.
@@ -63,7 +63,7 @@ _(Select Input)_:
 _(File Chooser)_:
 : <input type="text" id="filepicker" name="FILE_PICKER" autocomplete="off" spellcheck="false" class="narrow"
         data-pickfolders="true" data-pickfilter="HIDE_FILES_FILTER" data-pickroot="/mnt" pattern="^[^\\]*/$"
-        value="<?= htmlspecialchars($cfg['FILE_PICKER']); ?>">
+        value="<?= htmlspecialchars((string) ($cfg['FILE_PICKER'] ?? '')); ?>">
 
 <!-- Form action buttons - Apply saves changes, Done returns to previous page -->
 &nbsp;
