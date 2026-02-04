@@ -5,16 +5,27 @@ parameters:
     - page
   paths:
     - src
+    - tests/unit
   excludePaths:
     - */vendor/*
+    - tests/framework/*
+  # Bootstrap the testing framework so PHPStan knows about mocked functions
+  # This makes autov(), parse_plugin_cfg(), etc. recognized during analysis
+  bootstrapFiles:
+    - tests/framework/src/php/bootstrap.php
   ignoreErrors:
-    - # Ignore filesystem paths that won't be present in the dev environment
-      messages:
+    # Ignore filesystem paths that won't be present in the dev environment
+    # These are runtime includes that the stream wrapper handles during testing
+    - messages:
         - "#/usr/local/emhttp/plugins/.*.php#"
       identifier: requireOnce.fileNotFound
-    - # Ignore missing dynamix helper functions that won't be present in the dev environment
-      messages:
-        - "#autov#"
-        - "#parse_plugin_cfg#"
-      identifier: function.notFound
+    # Ignore version file that won't exist locally
+    - message: "#parse_ini_file\\('/etc/unraid-version'\\)#"
+      identifier: argument.type
+    # PHPStan is overly strict about assertions with known values in tests
+    # These are intentional tests of version comparison behavior
+    - identifier: method.alreadyNarrowedType
+      path: tests/unit/*
+    - identifier: method.impossibleType
+      path: tests/unit/*
   reportUnmatchedIgnoredErrors: false

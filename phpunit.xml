@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- PHPUnit Configuration for Unraid Plugin Testing -->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+         bootstrap="tests/bootstrap.php"
+         colors="true"
+         cacheDirectory=".phpunit.cache"
+         executionOrder="depends,defects"
+         requireCoverageMetadata="false"
+         beStrictAboutCoverageMetadata="false"
+         beStrictAboutOutputDuringTests="true"
+         displayDetailsOnTestsThatTriggerDeprecations="true"
+         displayDetailsOnTestsThatTriggerWarnings="true"
+         failOnRisky="false"
+         failOnWarning="true">
+    
+    <!-- Test Suites: Define the directories containing your test files -->
+    <testsuites>
+        <testsuite name="Unit Tests">
+            <directory>tests/unit</directory>
+        </testsuite>
+    </testsuites>
+    
+    <!-- Code Coverage: Which source files to include in coverage reports -->
+    <source>
+        <include>
+            <directory suffix=".php">src/usr/local/emhttp/plugins</directory>
+            <directory suffix=".page">src/usr/local/emhttp/plugins</directory>
+        </include>
+        <exclude>
+            <directory>tests</directory>
+            <directory>vendor</directory>
+        </exclude>
+    </source>
+    
+    <!-- PHP Configuration for test environment -->
+    <php>
+        <ini name="error_reporting" value="-1"/>
+        <ini name="display_errors" value="On"/>
+        <ini name="date.timezone" value="UTC"/>
+    </php>
+</phpunit>
